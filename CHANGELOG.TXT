@@ -1,0 +1,28 @@
+Version 1.1.0 stable (2012-06-06)
+---------------------------------
+- Added: now you can group attachments by year, by month, by day or not at all.   
+- Added: now you can choose different ways to add images to news. 
+- Fixed: append to the alias the news id only if the alias already exists in the database.
+- Fixed: report is saved to system log when email checking is executed by cron.
+- Fixed: automatic teaser action now works.
+- Fixed: minor bugs.
+
+
+Version 1.0.3 stable (2012-05-03)
+---------------------------------
+- Added: support for inserting images into news html text. 
+- Added: create a report for all operations executed, showed when you manually check emails.
+- Fixed: check if file size is lesser than $GLOBALS['TL_CONFIG']['maxFileSize']. 
+- Fixed: check if file type is in $GLOBALS['TL_CONFIG']['uploadTypes']. 
+- Fixed: minor bugs.
+
+
+Version 1.0.2 stable (2012-03-29)
+---------------------------------
+- Added: new button for manually checking emails of a send news manager. 
+- Added: new buttons for importing/exporting settings of a send news manager.
+
+
+Version 1.0.1 stable (2012-03-11)
+---------------------------------
+- First stable release.
