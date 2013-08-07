@@ -15,5 +15,5 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['zad_sendnews'] = array('News via email', 'Permette di inserire le notizie usando la posta elettronica.');
+$GLOBALS['TL_LANG']['MOD']['zad_sendnews'] = array('Send News', 'Post news sent by email.');
 

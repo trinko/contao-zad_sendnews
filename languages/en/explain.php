@@ -15,64 +15,65 @@
 /**
  * Help wizard messages
  */
+
 $GLOBALS['TL_LANG']['XPL']['zad_sendnews_date'] = array(
-  array('Formato date',
-    'Sono supportati tutti i formati date usati nel linguaggio PHP, inoltre si può usare la barra "/" per creare un percorso gerarchico.<br />
-    Ogni formato è indicato da una lettera: nel seguito sono indicati quelli più usati.<br />
+  array('Date Format',
+    'All PHP date formats are supported. Besides, you can use the slash "/" to create a recursive path.<br />
+    For each format is used a character: the following are the most used ones.<br />
     '),
-  array('Giorno',
+  array('Day',
     '<dl>
     <dt><strong>d</strong></dt>
-    <dd>Giorno del mese a due cifre, da 01 a 31.</dd>
+    <dd>Day of the month, 2 digits with leading zeros, from 01 to 31.</dd>
     <dt><strong>j</strong></dt>
-    <dd>Giorno del mese senza zeri davanti alle cifre, da 1 a 31.</dd>
+    <dd>Day of the month without leading zeros, from 1 to 31.</dd>
     </dl>'),
-  array('Mese',
+  array('Month',
     '<dl>
     <dt><strong>m</strong></dt>
-    <dd>Mese come numero a due cifre, da 01 a 12.</dd>
+    <dd>Numeric representation of a month, with leading zeros, from 01 to 12.</dd>
     <dt><strong>n</strong></dt>
-    <dd>Mese come numero senza zeri davanti alle cifre, da 1 a 12.</dd>
+    <dd>Numeric representation of a month, without leading zeros, from 1 to 12.</dd>
     </dl>'),
-  array('Anno',
+  array('Year',
     '<dl>
     <dt><strong>Y</strong></dt>
-    <dd>Anno a quattro cifre, es. 2013.</dd>
+    <dd>A full numeric representation of a year, 4 digits, for example 2013.</dd>
     <dt><strong>y</strong></dt>
-    <dd>Anno a due cifre, es. 13.</dd>
+    <dd>A two digit representation of a year, for example 13.</dd>
     </dl>'),
-  array('Percorso gerarchico',
+  array('Recursive path',
     '<dl>
     <dt><strong>/</strong></dt>
-    <dd>Vengono create più sottocartelle.</dd>
+    <dd>It will be created subfolders.</dd>
     </dl>'),
-  array('Esempi',
+  array('Examples',
     '<dl>
     <dt><strong>Y-m-d</strong></dt>
-    <dd>Raggruppa i file per giorno, creando sottocartelle del tipo "2013-03-29".</dd>
+    <dd>It groups files by day, creating subfolders named as "2013-03-29".</dd>
     <dt><strong>Y-m</strong></dt>
-    <dd>Raggruppa i file per mese, creando sottocartelle del tipo "2013-03".</dd>
+    <dd>It groups files by month, creating subfolders named as "2013-03".</dd>
     <dt><strong>Y</strong></dt>
-    <dd>Raggruppa i file per anno, creando sottocartelle del tipo "2013".</dd>
+    <dd>It groups files by year, creating subfolders named as "2013".</dd>
     <dt><strong>Y/m</strong></dt>
-    <dd>Raggruppa i file per mese, creando sottocartelle per gli anni (es. "2013") e al loro interno cartelle per i mesi (es. "03").</dd>
+    <dd>It groups files by month, creating subfolders for years (i.e. "2013") and, recursively, subfolders for months (i.e. "03").</dd>
     </dl>')
 );
 $GLOBALS['TL_LANG']['XPL']['zad_sendnews_re'] = array(
-  array('Sintassi delle espressioni regolari',
-    'Per informazioni sulla sintassi delle espressioni regolari visita la pagina: <a href="http://it.wikipedia.org/wiki/Espressione_regolare" title="Vai al sito Wikipedia" target="_blank">http://it.wikipedia.org/wiki/Espressione_regolare</a>.')
+  array('Regular Expression Syntax',
+    'For the syntax of regular expressions you can see the page: <a href="http://en.wikipedia.org/wiki/Regular_expression" title="Go to Wikipedia" target="_blank">http://en.wikipedia.org/wiki/Regular_expression</a>.')
 );
 $GLOBALS['TL_LANG']['XPL']['zad_sendnews_params'] = array(
-  array('Parametri speciali',
-    'Si possono utilizzare i seguenti parametri speciali:<br />
+  array('Special Parameters',
+    'You can use the following special parameters:<br />
     <dl>
-    <dt><strong>{{headline}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto attuale del titolo della news.</dd>
-    <dt><strong>{{subheadline}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto attuale del sottotitolo della news.</dd>
-    <dt><strong>{{html}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto attuale del testo formattato della news.</dd>
-    <dt><strong>{{text}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto attuale del testo semplice (non formattato) della news.</dd>
-    <dt><strong>{{teaser}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto attuale del testo introduttivo della news.</dd>
-    <dt><strong>{{email_subject}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto originale dell\'oggetto dell\'email.</dd>
-    <dt><strong>{{email_sender}}</strong></dt><dd>Questo parametro verrà sostituito dal contenuto originale del mittente dell\'email.</dd>
+    <dt><strong>{{headline}}</strong></dt><dd>This parameter will be replaced by the current content of the news headline.</dd>
+    <dt><strong>{{subheadline}}</strong></dt><dd>This parameter will be replaced by the current content of the news subheadline.</dd>
+    <dt><strong>{{html}}</strong></dt><dd>This parameter will be replaced by the current content of the news formatted text.</dd>
+    <dt><strong>{{text}}</strong></dt><dd>This parameter will be replaced by the current content of the news plain text.</dd>
+    <dt><strong>{{teaser}}</strong></dt><dd>This parameter will be replaced by the current content of the news teaser.</dd>
+    <dt><strong>{{email_subject}}</strong></dt><dd>This parameter will be replaced by the original content of the email subject.</dd>
+    <dt><strong>{{email_sender}}</strong></dt><dd>This parameter will be replaced by the original content of the email sender.</dd>
     </dl>')
 );
 $GLOBALS['TL_LANG']['XPL']['zad_sendnews_re_replace'] = array(

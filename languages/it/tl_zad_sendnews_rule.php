@@ -47,8 +47,8 @@ $GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['edit'] = array('Modifica', 'Modific
 $GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['copy'] = array('Duplica', 'Duplica la regola con ID %s');
 $GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['cut'] = array('Sposta', 'Cambia la posizione della regola con ID %s');
 $GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['delete'] = array('Cancella', 'Cancella la regola con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['show'] = array('Dettagli', 'Mostra i dettagli della regola con ID %s');
 $GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['toggle'] = array('Abilita/Disabilita', 'Abilita o disabilita la regola con ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['show'] = array('Dettagli', 'Mostra i dettagli della regola con ID %s');
 
 
 /**

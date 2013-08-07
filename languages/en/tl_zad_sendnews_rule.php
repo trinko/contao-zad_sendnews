@@ -15,67 +15,67 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['name'] = array('Titolo', 'Inserisci un nome identificativo per la regola.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target'] = array('Obiettivo', 'Seleziona l\'obiettivo della regola, scelto tra i campi della notizia.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action'] = array('Azione', 'Seleziona l\'azione da eseguire.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['re_search'] = array('Cerca', 'Inserisci il testo da cercare, usando la sintassi delle espressioni regolari ma senza delimitatori (ad esempio: [a-z]+@.*). La ricerca ignora le differenze tra maiuscolo e minuscolo.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['re_replace'] = array('Sostituisci', 'Inserisci il testo da sostituire a quello cercato, usando la sintassi delle espressioni regolari. Si possono usare anche alcuni parametri speciali, che si riferiscono ai campi della news e dell\'email.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['txt_replace'] = array('Rimpiazza', 'Inserisci il testo da usare al posto del contenuto indicato. Si possono usare anche alcuni parametri speciali, che si riferiscono ai campi della news e dell\'email.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['maxlen'] = array('Lunghezza massima', 'Inserisci la lunghezza massima per il testo introduttivo. Il valore deve essere compreso tra 50 e 10000.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['taglist'] = array('Lista dei tag HTML', 'Inserisci la lista dei tag HTML, usando la virgola come separatore (ad esempio: em,strong,p,table).');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['tag_replace'] = array('Rimpiazza tag HTML', 'Inserisci il tag HTML ed i relativi attributi, da usare al posto di ognuno degli elementi della lista (ad esempio: strong class="bold").');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['paramlist'] = array('Lista degli attributi dei tag HTML', 'Inserisci la lista degli attributi presenti nei tag HTML, usando la virgola come separatore (ad esempio: style,class,title).');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['extlist'] = array('Lista dei tipi di file', 'Inserisci la lista delle estensioni dei file, usando la virgola come separatore (ad esempio: doc,rtf,txt,xls).');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['active'] = array('Abilita', 'Abilita o meno la regola.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['name'] = array('Name', 'The rule name.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target'] = array('Target', 'Choose the target field for the rule.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action'] = array('Action', 'Choose the action to take.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['re_search'] = array('Search', 'Enter text to search, using regular expression syntax without delimiters (i.e. [a-z]+@.*). Search is case insensitive.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['re_replace'] = array('Replace', 'Enter text to replace, using regular expression syntax. You can use some special parameters, which refer to news fields and email ones.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['txt_replace'] = array('Replace', 'Enter text to replace. You can use some special parameters, which refer to news fields and email ones.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['maxlen'] = array('Max length', 'Enter the max length for the automatic teaser. The value must an integer between 50 and 10000.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['taglist'] = array('HTML tag list', 'Enter HTML tags as a comma separated list (i.e. em,strong,p,table).');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['tag_replace'] = array('Replace HTML tag', 'Enter the HTML tag and its attributes, which will be used for replace any specified tag (i.e. strong class="bold").');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['paramlist'] = array('HTML attribute list', 'Enter HTML attributes as a comma separated list (i.e. style,class,title).');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['extlist'] = array('File type list', 'Enter file types as a comma separated list (i.e. doc,rtf,txt,xls).');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['active'] = array('Enable', 'Enable the rule.');
 
 
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['settings_legend'] = 'Impostazioni principali';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_legend'] = 'Impostazioni azione';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['advanced_legend'] = 'Impostazioni avanzate';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['settings_legend'] = 'General Settings';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_legend'] = 'Action Settings';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['advanced_legend'] = 'Advanced settings';
 
 
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['new'] = array('Nuovo', 'Crea una nuova regola');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['pastenew'] = array('Aggiunge una nuova regola all\'inizio', 'Aggiunge una nuova regola dopo quella con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['pasteafter'] = array('Incolla la regola all\'inizio', 'Incolla la regola dopo quella con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['edit'] = array('Modifica', 'Modifica la regola con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['copy'] = array('Duplica', 'Duplica la regola con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['cut'] = array('Sposta', 'Cambia la posizione della regola con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['delete'] = array('Cancella', 'Cancella la regola con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['show'] = array('Dettagli', 'Mostra i dettagli della regola con ID %s');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['toggle'] = array('Abilita/Disabilita', 'Abilita o disabilita la regola con ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['new'] = array('New', 'Create a new rule');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['pastenew'] = array('Add a rule as first', 'Add a new rule after ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['pasteafter'] = array('Paste the rule as first', 'Paste the rule after ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['edit'] = array('Edit', 'Edit the rule with ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['copy'] = array('Copy', 'Copy the rule with ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['cut'] = array('Move', 'Move the rule with ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['delete'] = array('Delete', 'Delete the rule with ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['toggle'] = array('Toggle', 'Enable/Disable the rule with ID %s');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['show'] = array('Show', 'Show details of the rule with ID %s');
 
 
 /**
  * Labels
  */
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['headline'] = 'Titolo';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['subheadline'] = 'Sottotitolo';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['teaser'] = 'Introduzione';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['html'] = 'Testo formattato';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['text'] = 'Testo semplice, non formattato';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['files'] = 'Allegati';
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['none'] = array('Nessuna azione', 'Non viene eseguita nessuna modifica.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['regex'] = array('Cerca e sostituisci', 'Permette di cercare e sostituire un testo. Sia per la ricerca che per la sostituzione si usa la sintassi delle espressioni regolari. Nel testo da sostituire è possibile usare alcuni parametri speciali, che si riferiscono ai campi della news e dell\'email.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['replace'] = array('Rimpiazza il contenuto del campo', 'Sostituisce l\'intero contenuto del campo con il testo indicato. Nel testo da inserire è possibile usare alcuni parametri speciali, che si riferiscono ai campi della news e dell\'email.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['delete'] = array('Cancella il contenuto del campo', 'Elimina l\'intero contenuto del campo.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['intro'] = array('Crea testo introduttivo', 'Crea automaticamente il testo introduttivo, della dimensione massima indicata e con la lista dei tag HTML ammessi.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['striptags'] = array('Cancella tag HTML', 'Elimina i tag HTML indicati, senza modificare il testo contenuto.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['deltags'] = array('Cancella e svuota tag HTML', 'Elimina i tag HTML indicati, cancellando anche tutto il testo contenuto.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['rentags'] = array('Rinomina tag HTML', 'Modifica i tag HTML indicati, sostituindoli con il nome e gli attributi indicati.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['voidtags'] = array('Elimina tag HTML vuoti', 'Elimina i tag HTML elencati purché non contengano del testo al loro interno.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['delparams'] = array('Elimina attributi dei tag HTML', 'Elimina gli attributi elencati presenti nei tag HTML.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['allow'] = array('Indica i tipi di file ammessi', 'Permette di indicare una lista di tipi di file ammessi come allegati.');
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['pdf'] = array('Indica i tipi di file da convertire in PDF', 'Permette di indicare una lista di tipi di file che saranno convertiti in formato PDF. A seconda della configurazione del sistema, questa opzione potrebbe non essere attiva.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['headline'] = 'Headline';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['subheadline'] = 'Subheadline';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['teaser'] = 'Teaser';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['html'] = 'Formatted Text';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['text'] = 'Plain Text';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['target_options']['files'] = 'Attachments';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['none'] = array('No action', 'No field is changed.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['regex'] = array('Search and replace', 'Search some text and replace it with another one. You can use the regular expression syntax. In the replace text you can use some special parameters, which refer to news fields and email ones.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['replace'] = array('Replace content', 'Replace all contents of the specified field. In the replace text you can use some special parameters, which refer to news fields and email ones.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['delete'] = array('Delete content', 'Delete all contents of the specified field.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['intro'] = array('Automatic teaser', 'Create automatically a teaser for the news. You can set the max lenght and the allowed HTML tag list.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['striptags'] = array('Strip HTML tags', 'Strip the specified HTML tags, without changing the text inside them.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['deltags'] = array('Remove HTML tags with content', 'Delete the specified HTML tags, removing all the text inside them.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['rentags'] = array('Rename HTML tags', 'Change the specified HTML tags, replacing with a new tag and new attributes.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['voidtags'] = array('Remove void HTML tags', 'Delete recursively the specified HTML tags, only if they do not contain any text inside them.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['delparams'] = array('Remove HTML attributes', 'Delete the specified attributes from all HTML tags.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['allow'] = array('List allowed files', 'List file types allowed for attachments.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['action_options']['pdf'] = array('List files to convert to PDF', 'List file types which will be converted to PDF documents. Depending on system configuration, this option may not be active.');
 
 
 /**
  * Messages
  */
-$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['err_length'] = 'La lunghezza massima deve essere compresa tra 50 e 10000.';
+$GLOBALS['TL_LANG']['tl_zad_sendnews_rule']['err_length'] = 'Max length value must be between 50 and 10000.';
 
