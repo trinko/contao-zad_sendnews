@@ -1,54 +1,57 @@
 <?php
 
 /**
- * Zad Send News - A Contao CMS extension 
+ * Contao Open Source CMS
  *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at <http://www.gnu.org/licenses/>.
+ * Copyright (c) 2005-2013 Leo Feyer
  *
- * PHP version 5
- * @copyright  Copyright (C) 2012 by Antonello Dessi'
- * @author     Antonello Dessi'
- * @package    zad_sendnews
- * @license    LGPL 
- * @filesource
+ * @package   zad_sendnews
+ * @author    Antonello Dessì
+ * @license   LGPL
+ * @copyright Antonello Dessì 2012-2013
  */
+
+
+/**
+ * Namespace
+ */
+namespace zad_sendnews;
 
 
 /**
  * Class ZadSendnews
  *
- * Provide methods for backend management. 
+ * @copyright  Antonello Dessì 2012-2013
+ * @author     Antonello Dessì
+ * @package    zad_sendnews
  */
-class ZadSendnews extends Backend {
+class ZadSendnews extends \Backend {
 
 	/**
-	 * Export a send news manager to XML file.
+	 * Template
+	 * @var string
+	 */
+	protected $strTemplate = '';
+
+
+	/**
+	 * Export a ZAD Send News manager to XML file.
+	 * @param \DataContainer
 	 */
 	public function exportManager($dc) {
     // get the manager data
     $manager = $this->Database->prepare("SELECT * FROM tl_zad_sendnews WHERE id=?")
-                              ->execute($dc->id);    
+                              ->execute($dc->id);
 	  if ($manager->numRows < 1) {
 		  // error, exit
 			return;
 		}
 		// create a new XML document
-		$xml = new DOMDocument('1.0', 'UTF-8');
+		$xml = new \DOMDocument('1.0', 'UTF-8');
 		$xml->formatOutput = true;
 		// root element
 		$tables = $xml->createElement('tables');
+		$tables->setAttribute('version', '2.0');
 		$tables = $xml->appendChild($tables);
 		// add manager table
 	  $this->exportTable('tl_zad_sendnews', $xml, $tables, $manager);
@@ -66,7 +69,7 @@ class ZadSendnews extends Backend {
 	  $this->exportTable('tl_user', $xml, $tables, $user);
 		// create a zip archive
 		$tmp = md5(uniqid(mt_rand(), true));
-		$zip = new ZipWriter('system/tmp/'. $tmp); 
+		$zip = new \ZipWriter('system/tmp/'. $tmp);
 		// add XML document
 		$zip->addString($xml->saveXML(), 'sendnews.xml');
 		// close archive
@@ -76,8 +79,8 @@ class ZadSendnews extends Backend {
 		$name = strtolower(str_replace(' ', '_', $name));
 		$name = preg_replace('/[^A-Za-z0-9\._-]/', '', $name);
 		$name = basename($name);
-		// handle file info
-		$file = new File('system/tmp/'. $tmp);
+		// open the "save as …" dialogue
+		$file = new \File('system/tmp/'. $tmp, true);
     // send file
 		header('Content-Type: application/octet-stream');
 		header('Content-Transfer-Encoding: binary');
@@ -93,74 +96,80 @@ class ZadSendnews extends Backend {
   }
 
 	/**
-	 * Import a send news manager from XML file.
+	 * Import ZAD Send News managers from XML files.
+	 * @param \DataContainer
 	 */
 	public function importManager($dc) {
-		if ($this->Input->post('FORM_SUBMIT') == 'tl_sendnews_import') {
-			$source = $this->Input->post('source', true);
-			// check file names
-			if (!$source || !is_array($source)) {
-				$this->addErrorMessage($GLOBALS['TL_LANG']['ERR']['all_fields']);
+		if (\Input::get('key') != 'import') {
+      // error
+			return '';
+		}
+    // init
+		$this->import('BackendUser', 'User');
+		$class = $this->User->uploader;
+		if (!class_exists($class)) {
+			$class = 'FileUpload';
+		}
+		$uploader = new $class();
+    // import data
+		if (\Input::post('FORM_SUBMIT') == 'tl_sendnews_import') {
+			$uploaded = $uploader->uploadTo('system/tmp');
+			if (empty($uploaded)) {
+				\Message::addError($GLOBALS['TL_LANG']['ERR']['emptyUpload']);
 				$this->reload();
 			}
-			$files = array();
-			// skip invalid entries
-			foreach ($source as $zipfile) {
+      // skip invalid entries
+      $files = array();
+      foreach ($uploaded as $zipfile) {
 				// skip folders
 				if (is_dir(TL_ROOT . '/' . $zipfile)) {
-					$this->addErrorMessage(sprintf($GLOBALS['TL_LANG']['ERR']['importFolder'], basename($zipfile)));
+					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['importFolder'], basename($zipfile)));
 					continue;
 				}
-				$file = new File($zipfile);
 				// skip anything but .zip files
-				if ($file->extension != 'zip') {
-					$this->addErrorMessage(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $file->extension));
+				$fl = new \File($zipfile, true);
+				if ($fl->extension != 'zip') {
+					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $fl->extension));
 					continue;
 				}
-				$files[] = $zipfile;
+        $files[] = $zipfile;
 			}
-			// check if there are any files left
+			// check whether there are any files
 			if (empty($files)) {
-				$this->addErrorMessage($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				\Message::addError($GLOBALS['TL_LANG']['ERR']['emptyUpload']);
 				$this->reload();
 			}
-			// import data
+			// import all files
 			return $this->importFiles($files);
 		}
-    // create the widget 
-		$tree = new FileTree($this->prepareForWidget($GLOBALS['TL_DCA']['tl_zad_sendnews']['fields']['source'], 'source', null, 'source', 'tl_zad_sendnews'));
 		// return the form
 		return '
 <div id="tl_buttons">
-<a href="'.ampersand(str_replace('&key=import', '', $this->Environment->request)).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBT']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
+<a href="'.ampersand(str_replace('&key=import', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-
 <h2 class="sub_headline">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['import'][1].'</h2>
-'.$this->getMessages().'
-<form action="'.ampersand($this->Environment->request, true).'" id="tl_sendnews_import" class="tl_form" method="post">
+'.\Message::generate().'
+<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_sendnews_import" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_sendnews_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
-
+<input type="hidden" name="MAX_FILE_SIZE" value="'.$GLOBALS['TL_CONFIG']['maxFileSize'].'">
 <div class="tl_tbox">
-  <h3><label for="source">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['source'][0].'</label> <a href="contao/files.php" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['fileManager']) . '" data-lightbox="files 765 80%">' . $this->generateImage('filemanager.gif', $GLOBALS['TL_LANG']['MSC']['fileManager'], 'style="vertical-align:text-bottom"') . '</a></h3>'.$tree->generate().(strlen($GLOBALS['TL_LANG']['tl_zad_sendnews']['source'][1]) ? '
-  <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['source'][1].'</p>' : '').'
+  <h3>'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['import_source'][0].'</h3>'.$uploader->generateMarkup().(isset($GLOBALS['TL_LANG']['tl_zad_sendnews']['import_source'][1]) ? '
+  <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['import_source'][1].'</p>' : '').'
 </div>
-
 </div>
-
 <div class="tl_formbody_submit">
-
 <div class="tl_submit_container">
   <input type="submit" name="save" id="save" class="tl_submit" accesskey="s" value="'.specialchars($GLOBALS['TL_LANG']['tl_zad_sendnews']['import'][0]).'">
 </div>
-
 </div>
 </form>';
   }
 
 	/**
-	 * Check emails for a send news manager.
+	 * Check emails for a ZAD Send News manager.
+	 * @param \DataContainer
 	 */
 	public function checkEmails($dc) {
     // check emails
@@ -170,23 +179,23 @@ class ZadSendnews extends Backend {
     $report = $this->ZadSendnewsManager->getReport();
     $status = $this->ZadSendnewsManager->getStatus();
     if ($status == 0) {
-      $message = '<p class="tl_confirm">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_ok'].'</p>';         
+      $message = '<p class="tl_confirm">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_ok'].'</p>';
     } elseif ($status == 1) {
-      $message = '<p class="tl_info">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_warning'].'</p>';         
+      $message = '<p class="tl_info">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_warning'].'</p>';
     } elseif ($status == 2) {
-      $message = '<p class="tl_error">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_error'].'</p>';         
+      $message = '<p class="tl_error">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_error'].'</p>';
     } else {
-      $message = '<p class="tl_error">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_fatal'].'</p>';         
+      $message = '<p class="tl_error">'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['status_fatal'].'</p>';
     }
 		return '
 <div id="tl_buttons">
-<a href="'.ampersand(str_replace('&key=check', '', $this->Environment->request)).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBT']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
+<a href="'.ampersand(str_replace('&key=check', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
 <h2 class="sub_headline">'.$title.'</h2>
 <div class="tl_message">
 '.$message.'
 </div>
-<form action="'.ampersand(str_replace('&key=check', '', $this->Environment->request)).'" id="tl_sendnews_check" class="tl_form" method="post">
+<form action="'.ampersand(str_replace('&key=check', '', \Environment::get('request'))).'" id="tl_sendnews_check" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_sendnews_check">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
@@ -204,24 +213,142 @@ class ZadSendnews extends Backend {
   }
 
 	/**
+	 * Import ZAD Send News managers from XML files.
+	 * @param Array
+	 */
+	protected function importFiles($files) {
+    foreach ($files as $zipfile) {
+			$xml = null;
+			// open zip file
+			$zip = new \ZipReader($zipfile);
+			// extract XML file
+			if ($zip->next() && $zip->file_name == 'sendnews.xml') {
+				// load the XML file
+				$xml = new \DOMDocument();
+				$xml->preserveWhiteSpace = false;
+				$xml->loadXML($zip->unzip());
+			}
+			// if there is no XML file, skip to next zip file
+			if (!$xml instanceof \DOMDocument) {
+				\Message::addError(sprintf($GLOBALS['TL_LANG']['tl_zad_sendnews']['err_import_xml'], basename($zipfile)));
+				continue;
+			}
+      // read XML
+      $tab = array();
+			$version = $xml->getElementsByTagName('tables')->item($i)->getAttribute('version');
+      if (!$version || $version != '2.0') {
+        // warning: version is different!
+        \Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_zad_sendnews']['wrn_import_version'], basename($zipfile)));
+      }
+			$tables = $xml->getElementsByTagName('table');
+			for ($i=0; $i < $tables->length; $i++) {
+  			// loop through tables
+        $rows = $tables->item($i)->childNodes;
+				$table = $tables->item($i)->getAttribute('name');
+				for ($j=0; $j < $rows->length; $j++) {
+	   			// loop through rows
+					$fields = $rows->item($j)->childNodes;
+					for ($k=0; $k < $fields->length; $k++) {
+					  // loop through fields
+						$value = $fields->item($k)->nodeValue;
+						$name = $fields->item($k)->getAttribute('name');
+					  $tab[$table][$j][$name] = $value;
+          }
+        }
+      }
+      // get current news archive id
+      $news = $this->Database->prepare("SELECT id FROM tl_news_archive WHERE title=?")
+                             ->limit(1)
+    							           ->execute($tab['tl_news_archive'][0]['title']);
+      if ($news->numRows < 1) {
+        // set first news archive
+        $news = $this->Database->prepare("SELECT id FROM tl_news_archive ORDER BY id")
+                               ->limit(1)
+      							           ->execute();
+        if ($news->numRows < 1) {
+          // no news archive
+          $news->id = 0;
+      	}
+      }
+      // set news archive id
+      $tab['tl_zad_sendnews'][0]['news_archive'] = $news->id;
+      // get current news author id
+      $user = $this->Database->prepare("SELECT id FROM tl_user WHERE username=? OR name=? OR email=?")
+                             ->limit(1)
+    							           ->execute($tab['tl_user'][0]['username'], $tab['tl_user'][0]['name'], $tab['tl_user'][0]['email']);
+      if ($user->numRows < 1) {
+        // set first user
+        $user = $this->Database->prepare("SELECT id FROM tl_user ORDER BY id")
+                               ->limit(1)
+      							           ->execute();
+        if ($user->numRows < 1) {
+          // no news author
+          $user->id = 0;
+      	}
+      }
+      // set news author id
+      $tab['tl_zad_sendnews'][0]['news_author'] = $user->id;
+      // set send news manager name
+      $name = $this->Database->prepare("SELECT count(*) AS cnt FROM tl_zad_sendnews WHERE name LIKE ?")
+    							           ->execute($tab['tl_zad_sendnews'][0]['name'].'%');
+      $tab['tl_zad_sendnews'][0]['name'] .= ($name->cnt > 0) ? (' - '.$name->cnt) : '';
+			// lock tables
+			$locks = array('tl_zad_sendnews' => 'WRITE', 'tl_zad_sendnews_rule' => 'WRITE');
+			$this->Database->lockTables($locks);
+			// get current values
+			$tab['tl_zad_sendnews'][0]['id'] = $this->Database->getNextId('tl_zad_sendnews');
+			$tab['tl_zad_sendnews'][0]['tstamp'] = time();
+			$tab['tl_zad_sendnews'][0]['active'] = '';
+      // insert imported manager
+			$this->Database->prepare("INSERT INTO tl_zad_sendnews %s")
+                     ->set($tab['tl_zad_sendnews'][0])
+                     ->execute();
+      // insert imported rules
+      foreach ($tab['tl_zad_sendnews_rule'] as $rule) {
+  			// get current values
+  			$rule['id'] = $this->Database->getNextId('tl_zad_sendnews_rule');
+  			$rule['pid'] = $tab['tl_zad_sendnews'][0]['id'];
+  			$rule['tstamp'] = time();
+  			$this->Database->prepare("INSERT INTO tl_zad_sendnews_rule %s")
+                       ->set($rule)
+                       ->execute();
+      }
+			// unlock tables
+			$this->Database->unlockTables();
+			// notify the user
+			\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_zad_sendnews']['ok_imported'], basename($zipfile)));
+    }
+		// redirect
+		\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+		$this->redirect(str_replace('&key=import', '', \Environment::get('request')));
+  }
+
+	/**
 	 * Export a table to XML.
+	 * @param String
+	 * @param \Object
+	 * @param \Object
+	 * @param \Object
 	 */
 	protected function exportTable($table_name, &$xml, &$tables, &$data) {
 		// add table
 		$table = $xml->createElement('table');
 		$table->setAttribute('name', $table_name);
-		$table = $tables->appendChild($table);	
+		$table = $tables->appendChild($table);
 		// add rows
 		while ($data->next()) {
 			$this->exportRow($xml, $table, $data);
-		}		
+		}
 	}
 
 	/**
 	 * Export a table row to XML.
+	 * @param \Object
+	 * @param \Object
+	 * @param \Object
 	 */
 	protected function exportRow(&$xml, &$table, &$data) {
-    // add row	 
+    // add row
 		$row = $xml->createElement('row');
 		$row = $table->appendChild($row);
     // add data
@@ -239,112 +366,5 @@ class ZadSendnews extends Backend {
 		}
 	}
 
-	/**
-	 * Import send news managers from XML files.
-	 */
-	protected function importFiles($files) {
-    foreach ($files as $zipfile) {
-			$xml = null;
-			// open zip file
-			$zip = new ZipReader($zipfile);
-			// extract XML file
-			if ($zip->next() && $zip->file_name == 'sendnews.xml') {
-				// load the XML file
-				$xml = new DOMDocument();
-				$xml->preserveWhiteSpace = false;
-				$xml->loadXML($zip->unzip());
-			}
-			// if there is no XML file, skip to next zip file
-			if (!$xml instanceof DOMDocument) {
-				$this->addErrorMessage(sprintf($GLOBALS['TL_LANG']['tl_zad_sendnews']['err_xml'], basename($zipfile)));
-				continue;
-			}
-      // read XML
-      $tab = array();
-			$tables = $xml->getElementsByTagName('table');
-			for ($i=0; $i < $tables->length; $i++) {				
-  			// loop through tables
-        $rows = $tables->item($i)->childNodes;
-				$table = $tables->item($i)->getAttribute('name');
-				for ($j=0; $j < $rows->length; $j++) {					
-	   			// loop through rows
-					$fields = $rows->item($j)->childNodes;
-					for ($k=0; $k < $fields->length; $k++) {
-					  // loop through fields
-						$value = $fields->item($k)->nodeValue;
-						$name = $fields->item($k)->getAttribute('name');
-					  $tab[$table][$j][$name] = $value;	
-          }
-        }
-      }
-      // get current news archive id
-      $news = $this->Database->prepare("SELECT id FROM tl_news_archive WHERE title=?")
-                             ->limit(1)
-    							           ->execute($tab['tl_news_archive'][0]['title']);
-      if ($news->numRows < 1) {
-        // set first news archive 
-        $news = $this->Database->prepare("SELECT id FROM tl_news_archive ORDER BY id")
-                               ->limit(1)
-      							           ->execute();
-        if ($news->numRows < 1) {
-          // no news archive        
-          $news->id = 0;
-      	}						           
-      } 
-      // set news archive id
-      $tab['tl_zad_sendnews'][0]['news_archive'] = $news->id;
-      // get current news author id
-      $user = $this->Database->prepare("SELECT id FROM tl_user WHERE username=? OR name=? OR email=?")
-                             ->limit(1)
-    							           ->execute($tab['tl_user'][0]['username'], $tab['tl_user'][0]['name'], $tab['tl_user'][0]['email']);      
-      if ($user->numRows < 1) {
-        // set first user 
-        $user = $this->Database->prepare("SELECT id FROM tl_user ORDER BY id")
-                               ->limit(1)
-      							           ->execute();
-        if ($user->numRows < 1) {
-          // no news author
-          $user->id = 0;
-      	}						           
-      } 
-      // set news author id
-      $tab['tl_zad_sendnews'][0]['news_author'] = $user->id;
-      // set send news manager name
-      $name = $this->Database->prepare("SELECT count(*) AS cnt FROM tl_zad_sendnews WHERE name LIKE ?")
-    							           ->execute($tab['tl_zad_sendnews'][0]['name'].'%');
-      $tab['tl_zad_sendnews'][0]['name'] .= ($name->cnt > 0) ? (' - '.$name->cnt) : '';
-			// lock tables
-			$locks = array('tl_zad_sendnews' => 'WRITE', 'tl_zad_sendnews_rule' => 'WRITE');
-			$this->Database->lockTables($locks);
-			// get current values
-			$tab['tl_zad_sendnews'][0]['id'] = $this->Database->getNextId('tl_zad_sendnews');
-			$tab['tl_zad_sendnews'][0]['tstamp'] = time();
-			$tab['tl_zad_sendnews'][0]['active'] = '';
-      // insert imported manager      
-			$this->Database->prepare("INSERT INTO tl_zad_sendnews %s")
-                     ->set($tab['tl_zad_sendnews'][0])
-                     ->execute();
-      // insert imported rules
-      foreach ($tab['tl_zad_sendnews_rule'] as $rule) {
-  			// get current values
-  			$rule['id'] = $this->Database->getNextId('tl_zad_sendnews_rule');
-  			$rule['pid'] = $tab['tl_zad_sendnews'][0]['id']; 
-  			$rule['tstamp'] = time();
-  			$this->Database->prepare("INSERT INTO tl_zad_sendnews_rule %s")
-                       ->set($rule)
-                       ->execute();
-      }      
-			// unlock tables
-			$this->Database->unlockTables();
-			// notify the user
-			$this->addConfirmationMessage(sprintf($GLOBALS['TL_LANG']['tl_zad_sendnews']['ok_imported'], basename($zipfile)));
-    }
-		// redirect
-		setcookie('BE_PAGE_OFFSET', 0, 0, '/');
-		$this->redirect(str_replace('&key=import', '', $this->Environment->request));
-  }
-
 }
 
-
-?>

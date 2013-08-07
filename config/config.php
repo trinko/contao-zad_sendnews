@@ -1,38 +1,23 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
- * Zad Send News - A Contao CMS extension 
+ * Contao Open Source CMS
  *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at <http://www.gnu.org/licenses/>.
+ * Copyright (c) 2005-2013 Leo Feyer
  *
- * PHP version 5
- * @copyright  Copyright (C) 2012 by Antonello Dessi'
- * @author     Antonello Dessi'
- * @package    zad_sendnews
- * @license    LGPL 
- * @filesource
+ * @package   zad_sendnews
+ * @author    Antonello Dessì
+ * @license   LGPL
+ * @copyright Antonello Dessì 2012-2013
  */
 
 
 /**
- * Back end modules
+ * BACK END MODULES
  */
-$GLOBALS['BE_MOD']['content']['zad_sendnews'] = array
-(
+$GLOBALS['BE_MOD']['content']['zad_sendnews'] = array(
 	'tables'		   =>	array('tl_zad_sendnews', 'tl_zad_sendnews_rule'),
-	'icon'			   =>	'system/modules/zad_sendnews/html/icon.png',
+	'icon'			   =>	'system/modules/zad_sendnews/assets/icon.png',
 	'export'		   =>	array('ZadSendnews', 'exportManager'),
 	'import'		   =>	array('ZadSendnews', 'importManager'),
 	'check'		     =>	array('ZadSendnews', 'checkEmails')
@@ -40,7 +25,7 @@ $GLOBALS['BE_MOD']['content']['zad_sendnews'] = array
 
 
 /**
- * Cron jobs
+ * CRON JOBS
  */
 $GLOBALS['TL_CRON']['hourly'][] = array('ZadSendnewsManager', 'cronJobHourly');
 $GLOBALS['TL_CRON']['daily'][] = array('ZadSendnewsManager', 'cronJobDaily');
@@ -49,17 +34,14 @@ $GLOBALS['TL_CRON']['monthly'][] = array('ZadSendnewsManager', 'cronJobMonthly')
 
 
 /**
- * Register hook to avoid HTML tags conversion to entities 
+ * HOOKS
  */
-// removed: there is a BUG in addLogEntry hook in Contao 2.11.x!!  
-//$GLOBALS['TL_HOOKS']['addLogEntry'][] = array('ZadSendnewsManager', 'addLogEntryHook');
+$GLOBALS['TL_HOOKS']['addLogEntry'][] = array('ZadSendnewsManager', 'addLogEntryHook');
 
 
 /**
- * Constant used in 'addLogEntry' hook  
+ * CONSTANTS
  */
 define('ZAD_REPORT_MULTILINE', 'ZAD_REPORT_MULTILINE');
 define('ZAD_REPORT', 'REPORT');
 
-
-?>
