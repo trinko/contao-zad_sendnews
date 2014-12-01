@@ -1,3 +1,7 @@
+Version 2.0.1 stable
+-----------------
+* Fixed: attachment folder was not correctly saved into database.
+
 Version 2.0.0 rc1
 -----------------
 * Changed: new values for automatic publishing setting.

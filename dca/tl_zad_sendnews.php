@@ -218,7 +218,7 @@ $GLOBALS['TL_DCA']['tl_zad_sendnews'] = array(
 			'exclude'                     => true,
 			'inputType'                   => 'fileTree',
 			'eval'                        => array('mandatory'=>true, 'fieldType'=>'radio', 'files'=>false, 'tl_class'=>'clr'),
-			'sql'                         => "varchar(255) NOT NULL default ''"
+			'sql'                         => "binary(16) NULL"
 		),
 		'enclosure_dirtype' => array(
 			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_dirtype'],
