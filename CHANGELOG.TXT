@@ -1,3 +1,7 @@
+Version 2.0.2 stable
+-----------------
+* Fixed: added the ZadSendnewsModel class, as Contao 3.4 needs a model!
+
 Version 2.0.1 stable
 -----------------
 * Fixed: attachment folder was not correctly saved into database.
