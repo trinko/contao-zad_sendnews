@@ -3,7 +3,7 @@
 /**
  * Contao Open Source CMS
  *
- * Copyright (c) 2005-2013 Leo Feyer
+ * Copyright (c) 2005-2014 Leo Feyer
  *
  * @package Zad_sendnews
  * @link    https://contao.org
@@ -28,4 +28,7 @@ ClassLoader::addClasses(array
 	// Classes
 	'zad_sendnews\ZadSendnews'        => 'system/modules/zad_sendnews/classes/ZadSendnews.php',
 	'zad_sendnews\ZadSendnewsManager' => 'system/modules/zad_sendnews/classes/ZadSendnewsManager.php',
+
+	// Models
+	'zad_sendnews\ZadSendnewsModel'   => 'system/modules/zad_sendnews/models/ZadSendnewsModel.php',
 ));
