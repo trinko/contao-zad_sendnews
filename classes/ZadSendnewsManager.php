@@ -902,7 +902,7 @@ class ZadSendnewsManager extends \Backend {
       // add file to database
 			$file = new \File($filename);
       // add file id to enclosure list
-      $list[] =  \FilesModel::findByPath($filename)->id;
+      $list[] =  \FilesModel::findByPath($filename)->uuid;
     }
     if (count($list) > 0) {
       // addEnclosure: checkbox, boolean
