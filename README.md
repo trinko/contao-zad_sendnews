@@ -7,7 +7,7 @@ You can set:
 * the news archive where to post contents;
 * the author for posted news;
 * whether to include file attachments (and where files are saved);
-* whether to show images inline or using Contao Image Gallery;
+* how to add the attached images to the news (whether to show images inline or using Contao Image Gallery);
 * how often to check for new emails;
 * automatic publication of news (immediate, delayed, suspended);
 * the action to take on emails after posting the news (delete, log to file,
