@@ -30,6 +30,9 @@ $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_dir'] = array('Cartella degli 
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_dirtype'] = array('Raggruppamento allegati per data', 'Inserisci il formato della data da usare per raggruppare gli allegati in sottocartelle; ad es., "Y-m" crea una sottocartella per ogni mese (lascia il campo vuoto per non usare sottocartelle).');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_icon'] = array('Inserisce icona news', 'La prima immagine sarà usata come icona della notizia.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_images'] = array('Gestione delle immagini', 'Scegli in che modo gestire le immagini.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_size'] = array('Larghezza e altezza immagine', 'Inserisci la larghezza o l\'altezza dell\'immagine, oppure entrambe le misure, per ridimensionare l\'immagine. Se si lasciano questi campi vuoti verrà utilizzata la dimensione originale.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_perRow'] = array('Miniature per riga', 'Inserisci il numero di miniature per riga.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_tpl'] = array('Template per la galleria', 'Scegli il template per visualizzare la galleria di immagini.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['time_check'] = array('Controllo della posta', 'Indica ogni quanto tempo effettuare il controllo della casella di posta.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['auto_publish'] = array('Pubblicazione automatica', 'Seleziona il tipo di pubblicazione automatica delle notizie.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action'] = array('Azione finale', 'Seleziona che azione eseguire al termine dell\'inserimento delle notizie.');
@@ -97,6 +100,7 @@ $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action_options']['delete'] = 'Cance
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action_options']['log'] = 'Cancella le email, ma salva il contenuto nei file di log';
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action_options']['move'] = 'Sposta le email in un\'altra cartella';
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['import_source'] = array('File di importazione', 'Seleziona uno o più file di importazione (.zip).');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['lbl_gallery'] = 'Galleria di immagini';
 
 
 /**

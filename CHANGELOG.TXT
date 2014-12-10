@@ -1,3 +1,7 @@
+Version 2.1.0 stable
+-----------------
+* Added: support to Contao Image Gallery.
+
 Version 2.0.3 stable
 -----------------
 * Fixed: attached files are not shown in news.

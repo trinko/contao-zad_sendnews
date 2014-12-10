@@ -737,6 +737,26 @@ class ZadSendnewsManager extends \Backend {
     $content['type'] = 'text';
     $content['text'] = $text;
     $this->Database->prepare("INSERT INTO tl_content %s")->set($content)->execute();
+    // add gallery
+    if ($this->manager->enclosure_images == 'gallery') {
+      $content = array();
+      $content['pid'] = $news_id;
+      $content['ptable'] = 'tl_news';
+      $content['sorting'] = 256;
+      $content['tstamp'] = $import['tstamp'];
+      $content['type'] = 'gallery';
+      $content['headline'] = serialize(array('unit'=>'h1', 'value'=>$GLOBALS['TL_LANG']['tl_zad_sendnews']['lbl_gallery']));
+      $content['size'] = $this->manager->gallery_size;
+      $content['fullsize'] = '1';
+      $content['multiSRC'] = serialize($this->news['images']);
+      $content['orderSRC'] = serialize($this->news['images']);
+      $content['sortBy'] = 'custom';
+      $content['perRow'] = $this->manager->gallery_perRow;
+      $content['perPage'] = '0';
+      $content['numberOfItems'] = '0';
+      $content['galleryTpl'] = $this->manager->gallery_tpl;
+      $this->Database->prepare("INSERT INTO tl_content %s")->set($content)->execute();
+    }
     $this->report .= sprintf('&nbsp;&nbsp;&nbsp;&nbsp;'.$GLOBALS['TL_LANG']['tl_zad_sendnews']['inf_insert'].'<br />', $news_id);
   }
 
@@ -836,6 +856,7 @@ class ZadSendnewsManager extends \Backend {
 	 * @param array
 	 */
 	private function imageManagement(&$import) {
+    $imglist = array();
     foreach ($this->news['images'] as $img) {
       switch ($this->manager->enclosure_images) {
         case 'inline':
@@ -860,15 +881,21 @@ class ZadSendnewsManager extends \Backend {
           $this->news['files'][] = $img;
           break;
         case 'gallery':
-          // create a gallery content
+          // save files for gallery content
+          $filename = $this->saveFile($img);
+          // add file to database
+    			$file = new \File($filename);
+          // add file id to enclosure list
+          $imglist[] =  \FilesModel::findByPath($filename)->uuid;
           break;
         default:
           // do nothing
           break;
       }
     }
-    if ($this->manager->enclosure_icon && count($this->news['images']) > 0) {
-      // add news icon
+    if ($this->manager->enclosure_images == 'gallery') {
+      // save uuid list
+      $this->news['images'] = $imglist;
     }
 	}
 

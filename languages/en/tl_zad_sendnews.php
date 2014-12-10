@@ -30,6 +30,9 @@ $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_dir'] = array('Attachments Fol
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_dirtype'] = array('Grouping by Date', 'Enter the date format to group attachment files in subfolders; for example, "Y-m" create a subfolder for each month (leave blank to not use subfolders).');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_icon'] = array('News Icon', 'Use first image as news icon.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_images'] = array('Image Management', 'Choose how to manage images.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_size'] = array('Image width and height', 'Here you can set the image dimensions and the resize mode.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_perRow'] = array('Thumbnails per row', 'The number of image thumbnails per row.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_tpl'] = array('Gallery template', 'Here you can select the gallery template.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['time_check'] = array('Check time', 'Choose how often to check email.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['auto_publish'] = array('Automatic Publishing', 'Choose when to publish news.');
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action'] = array('Final Action', 'Choose what to do after entering the news.');
@@ -97,6 +100,7 @@ $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action_options']['delete'] = 'Delet
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action_options']['log'] = 'Delete emails, but save contents in log files';
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['post_action_options']['move'] = 'Move emails to another mailbox folder';
 $GLOBALS['TL_LANG']['tl_zad_sendnews']['import_source'] = array('Source files', 'Choose one or more ".zip" files.');
+$GLOBALS['TL_LANG']['tl_zad_sendnews']['lbl_gallery'] = 'Image Gallery';
 
 
 /**

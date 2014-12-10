@@ -9,8 +9,5 @@ TO DO LIST
 
 - Simplify rules and rule manager
 
-- Support to Contao Image Gallery content;
-
 - Add news icon (first image attached)
-
 

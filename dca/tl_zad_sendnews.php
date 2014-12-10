@@ -101,13 +101,13 @@ $GLOBALS['TL_DCA']['tl_zad_sendnews'] = array(
 	),
 	// Palettes
 	'palettes' => array(
-		'__selector__'                => array('enclosure','post_action'),
+		'__selector__'                => array('enclosure','enclosure_images','post_action'),
 		'default'                     => '{title_legend},name;{server_legend},server_name,server_port,server_type,server_tls,server_user,server_password,server_mailbox;{news_legend},news_archive,news_author;{enclosure_legend},enclosure;{advanced_legend:hide},time_check,auto_publish,post_action,active;'
 	),
 	// Subpalettes
 	'subpalettes' => array(
-//     'enclosure'                   => 'enclosure_dir,enclosure_dirtype,enclosure_icon,enclosure_images',
     'enclosure'                   => 'enclosure_dir,enclosure_dirtype,enclosure_images',
+    'enclosure_images_gallery'    => 'gallery_size,gallery_perRow,gallery_tpl',
     'post_action_move'            => 'move_mailbox'
 	),
 	// Fields
@@ -226,27 +226,44 @@ $GLOBALS['TL_DCA']['tl_zad_sendnews'] = array(
 			'inputType'                   => 'text',
 			'default'                     => '',
       'explanation'                 => 'zad_sendnews_date',
-			'eval'                        => array('helpwizard'=>true, 'tl_class'=>'clr'),
+			'eval'                        => array('helpwizard'=>true, 'tl_class'=>'w50'),
 			'sql'                         => "varchar(255) NOT NULL default ''"
-		),
-		'enclosure_icon' => array(
-			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_icon'],
-			'exclude'                     => true,
-			'inputType'                   => 'checkbox',
-			'default'                     => '',
-			'eval'                        => array('tl_class'=>'w50'),
-			'sql'                         => "char(1) NOT NULL default ''"
 		),
 		'enclosure_images' => array(
 			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_images'],
 			'exclude'                     => true,
 			'inputType'                   => 'select',
-// 			'options'                     => array('none','attached','inline','gallery'),
-			'options'                     => array('none','attached','inline'),
+			'options'                     => array('none','attached','inline','gallery'),
 			'default'                     => 'inline',
 			'reference'                   => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['enclosure_images_options'],
-			'eval'                        => array('mandatory'=>true, 'tl_class'=>'w50'),
+			'eval'                        => array('mandatory'=>true, 'submitOnChange'=>true, 'tl_class'=>'w50'),
 			'sql'                         => "varchar(16) NOT NULL default ''"
+		),
+		'gallery_size' => array(
+			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_size'],
+			'exclude'                     => true,
+			'inputType'                   => 'imageSize',
+			'options'                     => $GLOBALS['TL_CROP'],
+			'reference'                   => &$GLOBALS['TL_LANG']['MSC'],
+			'eval'                        => array('rgxp'=>'digit', 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
+			'sql'                         => "varchar(64) NOT NULL default ''"
+		),
+    'gallery_perRow' => array(
+			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_perRow'],
+			'exclude'                     => true,
+			'inputType'                   => 'select',
+			'options'                     => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+			'default'                     => 4,
+			'eval'                        => array('mandatory'=>true, 'tl_class'=>'w50'),
+			'sql'                         => "smallint(5) unsigned NOT NULL default '0'"
+		),
+		'gallery_tpl' => array(
+			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['gallery_tpl'],
+			'exclude'                     => true,
+			'inputType'                   => 'select',
+			'options_callback'            => array('tl_zad_sendnews', 'getGalleryTemplates'),
+			'eval'                        => array('mandatory'=>true, 'tl_class'=>'w50'),
+			'sql'                         => "varchar(64) NOT NULL default ''"
 		),
     'time_check' => array(
 			'label'                       => &$GLOBALS['TL_LANG']['tl_zad_sendnews']['time_check'],
@@ -415,6 +432,14 @@ class tl_zad_sendnews extends Backend {
     // update
 		$this->Database->prepare('UPDATE tl_zad_sendnews SET server_command=? WHERE id=?')
 					         ->execute($cmd, $dc->id);
+	}
+
+	/**
+	 * Return all gallery templates as array
+	 * @return array
+	 */
+	public function getGalleryTemplates() {
+		return $this->getTemplateGroup('gallery_');
 	}
 
 }
