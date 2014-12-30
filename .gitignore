@@ -17,3 +17,8 @@ $RECYCLE.BIN/
 
 # Windows GitHub dump file
 *.stackdump
+
+#############
+## Custom
+#############
+TO_DO_LIST.txt
